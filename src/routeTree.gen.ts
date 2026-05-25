@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
 import { Route as AppNewRouteImport } from './routes/app.new'
 import { Route as AppSitesSiteIdRouteImport } from './routes/app.sites.$siteId'
 
@@ -30,6 +31,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppNewRoute = AppNewRouteImport.update({
   id: '/new',
   path: '/new',
@@ -45,12 +51,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/app/new': typeof AppNewRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/': typeof AppIndexRoute
   '/app/sites/$siteId': typeof AppSitesSiteIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/new': typeof AppNewRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app': typeof AppIndexRoute
   '/app/sites/$siteId': typeof AppSitesSiteIdRoute
 }
@@ -59,15 +67,29 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/app/new': typeof AppNewRoute
+  '/app/settings': typeof AppSettingsRoute
   '/app/': typeof AppIndexRoute
   '/app/sites/$siteId': typeof AppSitesSiteIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/app/new' | '/app/' | '/app/sites/$siteId'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/app/new'
+    | '/app/settings'
+    | '/app/'
+    | '/app/sites/$siteId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app/new' | '/app' | '/app/sites/$siteId'
-  id: '__root__' | '/' | '/app' | '/app/new' | '/app/' | '/app/sites/$siteId'
+  to: '/' | '/app/new' | '/app/settings' | '/app' | '/app/sites/$siteId'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/app/new'
+    | '/app/settings'
+    | '/app/'
+    | '/app/sites/$siteId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -98,6 +120,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/new': {
       id: '/app/new'
       path: '/new'
@@ -117,12 +146,14 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppNewRoute: typeof AppNewRoute
+  AppSettingsRoute: typeof AppSettingsRoute
   AppIndexRoute: typeof AppIndexRoute
   AppSitesSiteIdRoute: typeof AppSitesSiteIdRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppNewRoute: AppNewRoute,
+  AppSettingsRoute: AppSettingsRoute,
   AppIndexRoute: AppIndexRoute,
   AppSitesSiteIdRoute: AppSitesSiteIdRoute,
 }

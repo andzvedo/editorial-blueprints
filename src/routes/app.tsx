@@ -54,9 +54,15 @@ function TopBar({ crumbs }: { crumbs: string[] }) {
             </span>
           ))}
         </div>
-        <div className="ml-auto flex items-center gap-4">
+        <div className="ml-auto flex items-center gap-5">
           <span className="tech-label hidden md:inline">WS / 001 — ACTIVE</span>
           <div className="h-8 w-8 rounded-full border border-[var(--color-rule)] bg-[linear-gradient(135deg,var(--color-accent),oklch(0.7_0.15_60))]" />
+          <Link
+            to="/app/settings"
+            className="font-serif text-[14px] underline decoration-[var(--color-rule)] underline-offset-4 hover:text-[var(--color-accent)] hover:decoration-[var(--color-accent)]"
+          >
+            Settings
+          </Link>
         </div>
       </div>
     </header>

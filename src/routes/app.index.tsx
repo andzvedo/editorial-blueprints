@@ -1,78 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { TechCorners, TechLabel } from "@/components/tech";
 import { useState } from "react";
+import { useSites, type Site, type SiteStatus } from "@/lib/sites-store";
 
 export const Route = createFileRoute("/app/")({
   component: Dashboard,
 });
-
-type SiteStatus = "live" | "draft" | "archived";
-type Site = {
-  id: string;
-  name: string;
-  url: string;
-  status: SiteStatus;
-  meta: string;
-  index: string;
-  updated: string;
-};
-
-const SITES: Site[] = [
-  {
-    id: "andreazevedo",
-    name: "Andre Azevedo — Personal Site",
-    url: "andre.pointer.design",
-    status: "live",
-    meta: "Editorial / Case studies — 4 work · 1 page",
-    index: "A.01",
-    updated: "MAI 21, 2026",
-  },
-  {
-    id: "new-site-9",
-    name: "new-site-9",
-    url: "new-site-9.pointer.design",
-    status: "draft",
-    meta: "Pronto para começar no editor",
-    index: "A.02",
-    updated: "MAI 18, 2026",
-  },
-  {
-    id: "new-site-6",
-    name: "new-site-6",
-    url: "new-site-6.pointer.design",
-    status: "archived",
-    meta: "Arquivado — restaure para voltar a editar",
-    index: "B.01",
-    updated: "ABR 02, 2026",
-  },
-  {
-    id: "new-site-5",
-    name: "new-site-5",
-    url: "new-site-5.pointer.design",
-    status: "archived",
-    meta: "Arquivado — restaure para voltar a editar",
-    index: "B.02",
-    updated: "MAR 28, 2026",
-  },
-  {
-    id: "new-site-4",
-    name: "new-site-4",
-    url: "new-site-4.pointer.design",
-    status: "archived",
-    meta: "Arquivado — restaure para voltar a editar",
-    index: "B.03",
-    updated: "MAR 19, 2026",
-  },
-  {
-    id: "new-site-8",
-    name: "new-site-8",
-    url: "new-site-8.pointer.design",
-    status: "archived",
-    meta: "Arquivado — restaure para voltar a editar",
-    index: "B.04",
-    updated: "FEV 11, 2026",
-  },
-];
 
 const FILTERS: { key: "all" | SiteStatus; label: string; count: (s: Site[]) => number }[] = [
   { key: "all", label: "Todos", count: (s) => s.length },
@@ -86,8 +19,9 @@ const FILTERS: { key: "all" | SiteStatus; label: string; count: (s: Site[]) => n
 ];
 
 function Dashboard() {
+  const sites = useSites();
   const [filter, setFilter] = useState<"all" | SiteStatus>("all");
-  const visible = filter === "all" ? SITES : SITES.filter((s) => s.status === filter);
+  const visible = filter === "all" ? sites : sites.filter((s) => s.status === filter);
 
   return (
     <main className="px-5 pb-24 pt-8">
@@ -132,7 +66,7 @@ function Dashboard() {
                 }`}
               >
                 {f.label}
-                <span className="font-mono text-[10px] opacity-70">{f.count(SITES)}</span>
+                <span className="font-mono text-[10px] opacity-70">{f.count(sites)}</span>
               </button>
             );
           })}
