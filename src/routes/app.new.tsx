@@ -51,7 +51,20 @@ function NewSite() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            setCreated({ name: name || "Portfolio 2026", slug });
+            const displayName = name || "Portfolio 2026";
+            const existing = sitesStore.get(slug);
+            if (!existing) {
+              sitesStore.add({
+                id: slug,
+                name: displayName,
+                url: `${slug}.pointer.design`,
+                status: "live",
+                meta: "Recém-criado — pronto para editar",
+                index: nextIndex(sitesStore.getSnapshot()),
+                updated: formatToday(),
+              });
+            }
+            setCreated({ name: displayName, slug });
           }}
           className="mx-auto mt-10 max-w-md space-y-6"
         >
