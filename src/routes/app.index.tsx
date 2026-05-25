@@ -66,7 +66,7 @@ function Dashboard() {
                 }`}
               >
                 {f.label}
-                <span className="font-mono text-[10px] opacity-70">{f.count(SITES)}</span>
+                <span className="font-mono text-[10px] opacity-70">{f.count(sites)}</span>
               </button>
             );
           })}
