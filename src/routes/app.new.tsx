@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { TechCorners, TechLabel } from "@/components/tech";
 import { useMemo, useState } from "react";
+import { sitesStore, formatToday, nextIndex } from "@/lib/sites-store";
 
 export const Route = createFileRoute("/app/new")({
   component: NewSite,
