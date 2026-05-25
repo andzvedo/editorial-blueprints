@@ -9,31 +9,46 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AppRouteImport } from './routes/app'
+import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppSettingsRouteImport } from './routes/app.settings'
+import { Route as AppNewRouteImport } from './routes/app.new'
 import { Route as AuthVerifyRouteImport } from './routes/_auth.verify'
 import { Route as AuthSignUpRouteImport } from './routes/_auth.sign-up'
 import { Route as AuthSignInRouteImport } from './routes/_auth.sign-in'
 import { Route as AuthSetupWorkspaceRouteImport } from './routes/_auth.setup-workspace'
-import { Route as AppIndexRouteImport } from './routes/app.index'
-import { Route as AppSettingsRouteImport } from './routes/app.settings'
-import { Route as AppNewRouteImport } from './routes/app.new'
 import { Route as AppSitesSiteIdRouteImport } from './routes/app.sites.$siteId'
 
-const AuthRoute = AuthRouteImport.update({
-  id: '/_auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AppRoute = AppRouteImport.update({
   id: '/app',
   path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSettingsRoute = AppSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNewRoute = AppNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AppRoute,
 } as any)
 const AuthVerifyRoute = AuthVerifyRouteImport.update({
   id: '/verify',
@@ -55,21 +70,6 @@ const AuthSetupWorkspaceRoute = AuthSetupWorkspaceRouteImport.update({
   path: '/setup-workspace',
   getParentRoute: () => AuthRoute,
 } as any)
-const AppIndexRoute = AppIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppSettingsRoute = AppSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppNewRoute = AppNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AppRoute,
-} as any)
 const AppSitesSiteIdRoute = AppSitesSiteIdRouteImport.update({
   id: '/sites/$siteId',
   path: '/sites/$siteId',
@@ -79,40 +79,38 @@ const AppSitesSiteIdRoute = AppSitesSiteIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
-  '': typeof AuthRouteWithChildren
-  '/app/new': typeof AppNewRoute
-  '/app/settings': typeof AppSettingsRoute
-  '/app/': typeof AppIndexRoute
   '/setup-workspace': typeof AuthSetupWorkspaceRoute
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
   '/verify': typeof AuthVerifyRoute
+  '/app/new': typeof AppNewRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/': typeof AppIndexRoute
   '/app/sites/$siteId': typeof AppSitesSiteIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof AuthRouteWithChildren
-  '/app/new': typeof AppNewRoute
-  '/app/settings': typeof AppSettingsRoute
-  '/app': typeof AppIndexRoute
   '/setup-workspace': typeof AuthSetupWorkspaceRoute
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
   '/verify': typeof AuthVerifyRoute
+  '/app/new': typeof AppNewRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app': typeof AppIndexRoute
   '/app/sites/$siteId': typeof AppSitesSiteIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
-  '/app/new': typeof AppNewRoute
-  '/app/settings': typeof AppSettingsRoute
-  '/app/': typeof AppIndexRoute
+  '/app': typeof AppRouteWithChildren
   '/_auth/setup-workspace': typeof AuthSetupWorkspaceRoute
   '/_auth/sign-in': typeof AuthSignInRoute
   '/_auth/sign-up': typeof AuthSignUpRoute
   '/_auth/verify': typeof AuthVerifyRoute
+  '/app/new': typeof AppNewRoute
+  '/app/settings': typeof AppSettingsRoute
+  '/app/': typeof AppIndexRoute
   '/app/sites/$siteId': typeof AppSitesSiteIdRoute
 }
 export interface FileRouteTypes {
@@ -120,62 +118,60 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
-    | ''
-    | '/app/new'
-    | '/app/settings'
-    | '/app/'
     | '/setup-workspace'
     | '/sign-in'
     | '/sign-up'
     | '/verify'
+    | '/app/new'
+    | '/app/settings'
+    | '/app/'
     | '/app/sites/$siteId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | ''
-    | '/app/new'
-    | '/app/settings'
-    | '/app'
     | '/setup-workspace'
     | '/sign-in'
     | '/sign-up'
     | '/verify'
+    | '/app/new'
+    | '/app/settings'
+    | '/app'
     | '/app/sites/$siteId'
   id:
     | '__root__'
     | '/'
-    | '/app'
     | '/_auth'
-    | '/app/new'
-    | '/app/settings'
-    | '/app/'
+    | '/app'
     | '/_auth/setup-workspace'
     | '/_auth/sign-in'
     | '/_auth/sign-up'
     | '/_auth/verify'
+    | '/app/new'
+    | '/app/settings'
+    | '/app/'
     | '/app/sites/$siteId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_auth': {
-      id: '/_auth'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/app': {
       id: '/app'
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -184,6 +180,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/new': {
+      id: '/app/new'
+      path: '/new'
+      fullPath: '/app/new'
+      preLoaderRoute: typeof AppNewRouteImport
+      parentRoute: typeof AppRoute
     }
     '/_auth/verify': {
       id: '/_auth/verify'
@@ -213,27 +230,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSetupWorkspaceRouteImport
       parentRoute: typeof AuthRoute
     }
-    '/app/': {
-      id: '/app/'
-      path: '/'
-      fullPath: '/app/'
-      preLoaderRoute: typeof AppIndexRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/app/settings': {
-      id: '/app/settings'
-      path: '/settings'
-      fullPath: '/app/settings'
-      preLoaderRoute: typeof AppSettingsRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/app/new': {
-      id: '/app/new'
-      path: '/new'
-      fullPath: '/app/new'
-      preLoaderRoute: typeof AppNewRouteImport
-      parentRoute: typeof AppRoute
-    }
     '/app/sites/$siteId': {
       id: '/app/sites/$siteId'
       path: '/sites/$siteId'
@@ -243,22 +239,6 @@ declare module '@tanstack/react-router' {
     }
   }
 }
-
-interface AppRouteChildren {
-  AppNewRoute: typeof AppNewRoute
-  AppSettingsRoute: typeof AppSettingsRoute
-  AppIndexRoute: typeof AppIndexRoute
-  AppSitesSiteIdRoute: typeof AppSitesSiteIdRoute
-}
-
-const AppRouteChildren: AppRouteChildren = {
-  AppNewRoute: AppNewRoute,
-  AppSettingsRoute: AppSettingsRoute,
-  AppIndexRoute: AppIndexRoute,
-  AppSitesSiteIdRoute: AppSitesSiteIdRoute,
-}
-
-const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface AuthRouteChildren {
   AuthSetupWorkspaceRoute: typeof AuthSetupWorkspaceRoute
@@ -276,10 +256,26 @@ const AuthRouteChildren: AuthRouteChildren = {
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
+interface AppRouteChildren {
+  AppNewRoute: typeof AppNewRoute
+  AppSettingsRoute: typeof AppSettingsRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppSitesSiteIdRoute: typeof AppSitesSiteIdRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppNewRoute: AppNewRoute,
+  AppSettingsRoute: AppSettingsRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppSitesSiteIdRoute: AppSitesSiteIdRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
