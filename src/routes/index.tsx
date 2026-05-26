@@ -392,7 +392,7 @@ function Index() {
             </button>
             <div className="mt-3 flex items-center justify-between">
               <TechLabel>FORM REV. 01 — CAMPO OBRIGATÓRIO</TechLabel>
-              <a href="/sign-in" className="tech-label underline">
+              <a href="/invite" className="tech-label underline">
                 Já tem convite? Entrar
               </a>
             </div>
