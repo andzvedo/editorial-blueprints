@@ -19,6 +19,7 @@ import { Route as AuthVerifyRouteImport } from './routes/_auth.verify'
 import { Route as AuthSignUpRouteImport } from './routes/_auth.sign-up'
 import { Route as AuthSignInRouteImport } from './routes/_auth.sign-in'
 import { Route as AuthSetupWorkspaceRouteImport } from './routes/_auth.setup-workspace'
+import { Route as AuthInviteRouteImport } from './routes/_auth.invite'
 import { Route as AppSitesSiteIdRouteImport } from './routes/app.sites.$siteId'
 
 const AppRoute = AppRouteImport.update({
@@ -70,6 +71,11 @@ const AuthSetupWorkspaceRoute = AuthSetupWorkspaceRouteImport.update({
   path: '/setup-workspace',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthInviteRoute = AuthInviteRouteImport.update({
+  id: '/invite',
+  path: '/invite',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AppSitesSiteIdRoute = AppSitesSiteIdRouteImport.update({
   id: '/sites/$siteId',
   path: '/sites/$siteId',
@@ -79,6 +85,7 @@ const AppSitesSiteIdRoute = AppSitesSiteIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/invite': typeof AuthInviteRoute
   '/setup-workspace': typeof AuthSetupWorkspaceRoute
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/invite': typeof AuthInviteRoute
   '/setup-workspace': typeof AuthSetupWorkspaceRoute
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
   '/app': typeof AppRouteWithChildren
+  '/_auth/invite': typeof AuthInviteRoute
   '/_auth/setup-workspace': typeof AuthSetupWorkspaceRoute
   '/_auth/sign-in': typeof AuthSignInRoute
   '/_auth/sign-up': typeof AuthSignUpRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
+    | '/invite'
     | '/setup-workspace'
     | '/sign-in'
     | '/sign-up'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/invite'
     | '/setup-workspace'
     | '/sign-in'
     | '/sign-up'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_auth'
     | '/app'
+    | '/_auth/invite'
     | '/_auth/setup-workspace'
     | '/_auth/sign-in'
     | '/_auth/sign-up'
@@ -230,6 +242,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSetupWorkspaceRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_auth/invite': {
+      id: '/_auth/invite'
+      path: '/invite'
+      fullPath: '/invite'
+      preLoaderRoute: typeof AuthInviteRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/app/sites/$siteId': {
       id: '/app/sites/$siteId'
       path: '/sites/$siteId'
@@ -241,6 +260,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthRouteChildren {
+  AuthInviteRoute: typeof AuthInviteRoute
   AuthSetupWorkspaceRoute: typeof AuthSetupWorkspaceRoute
   AuthSignInRoute: typeof AuthSignInRoute
   AuthSignUpRoute: typeof AuthSignUpRoute
@@ -248,6 +268,7 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthInviteRoute: AuthInviteRoute,
   AuthSetupWorkspaceRoute: AuthSetupWorkspaceRoute,
   AuthSignInRoute: AuthSignInRoute,
   AuthSignUpRoute: AuthSignUpRoute,
