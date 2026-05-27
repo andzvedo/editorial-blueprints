@@ -62,12 +62,16 @@ function SiteEditor() {
           <button className="tech-label border border-[var(--color-rule)] bg-[var(--color-card)] px-3 py-2 hover:border-foreground hover:text-foreground">
             ↗ PREVIEW
           </button>
-          <button
-            className="inline-flex h-9 items-center gap-2 bg-[var(--color-accent)] px-4 text-[12px] font-medium uppercase tracking-wider text-[var(--color-accent-foreground)] transition hover:bg-foreground"
-            style={{ clipPath: "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
-          >
-            Publish ↗
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setPublishOpen((v) => !v)}
+              className="inline-flex h-9 items-center gap-2 bg-[var(--color-accent)] px-4 text-[12px] font-medium uppercase tracking-wider text-[var(--color-accent-foreground)] transition hover:bg-foreground"
+              style={{ clipPath: "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
+            >
+              Publish ↗
+            </button>
+            <PublishPopover open={publishOpen} onClose={() => setPublishOpen(false)} siteId={siteId} />
+          </div>
         </div>
       </div>
 
