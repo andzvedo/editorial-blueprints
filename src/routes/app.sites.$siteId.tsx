@@ -33,6 +33,7 @@ function SiteEditor() {
   const [tab, setTab] = useState<Tab>("content");
   const [query, setQuery] = useState("");
   const [activeSlug, setActiveSlug] = useState<string | null>("blink");
+  const [publishOpen, setPublishOpen] = useState(false);
 
   const filtered = DOCS.filter((d) => d.title.toLowerCase().includes(query.toLowerCase()));
   const groups = {
