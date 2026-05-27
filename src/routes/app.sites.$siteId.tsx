@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { TechCorners, TechLabel } from "@/components/tech";
+import { PublishPopover } from "@/components/publish-popover";
 import { useState } from "react";
 
 export const Route = createFileRoute("/app/sites/$siteId")({
