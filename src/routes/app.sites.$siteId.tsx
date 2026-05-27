@@ -1,5 +1,6 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { TechCorners, TechLabel } from "@/components/tech";
+import { PublishPopover } from "@/components/publish-popover";
 import { useState } from "react";
 
 export const Route = createFileRoute("/app/sites/$siteId")({
@@ -32,6 +33,7 @@ function SiteEditor() {
   const [tab, setTab] = useState<Tab>("content");
   const [query, setQuery] = useState("");
   const [activeSlug, setActiveSlug] = useState<string | null>("blink");
+  const [publishOpen, setPublishOpen] = useState(false);
 
   const filtered = DOCS.filter((d) => d.title.toLowerCase().includes(query.toLowerCase()));
   const groups = {
@@ -60,12 +62,16 @@ function SiteEditor() {
           <button className="tech-label border border-[var(--color-rule)] bg-[var(--color-card)] px-3 py-2 hover:border-foreground hover:text-foreground">
             ↗ PREVIEW
           </button>
-          <button
-            className="inline-flex h-9 items-center gap-2 bg-[var(--color-accent)] px-4 text-[12px] font-medium uppercase tracking-wider text-[var(--color-accent-foreground)] transition hover:bg-foreground"
-            style={{ clipPath: "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
-          >
-            Publish ↗
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setPublishOpen((v) => !v)}
+              className="inline-flex h-9 items-center gap-2 bg-[var(--color-accent)] px-4 text-[12px] font-medium uppercase tracking-wider text-[var(--color-accent-foreground)] transition hover:bg-foreground"
+              style={{ clipPath: "polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)" }}
+            >
+              Publish ↗
+            </button>
+            <PublishPopover open={publishOpen} onClose={() => setPublishOpen(false)} siteId={siteId} />
+          </div>
         </div>
       </div>
 
