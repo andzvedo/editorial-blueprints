@@ -10,7 +10,7 @@ import {
   type Doc,
   type DocStatus,
 } from "@/lib/docs-store";
-import { StatusPill } from "@/routes/app.docs.index";
+
 import { sitesStore } from "@/lib/sites-store";
 
 export const Route = createFileRoute("/app/docs/$docId")({
