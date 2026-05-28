@@ -522,3 +522,15 @@ Yes. Review before merge.`;
     </div>
   );
 }
+
+function StatusPill({ status }: { status: DocStatus }) {
+  return (
+    <span
+      className="tech-label inline-flex items-center gap-2 border border-[var(--color-rule)] bg-[var(--color-paper)] px-2 py-1"
+      style={{ color: statusToken(status) }}
+    >
+      <span className="h-1.5 w-1.5 rounded-full" style={{ background: statusToken(status) }} />
+      {STATUS_LABELS[status].toUpperCase()}
+    </span>
+  );
+}
