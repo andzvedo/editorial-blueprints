@@ -20,7 +20,10 @@ import { Route as AuthSignUpRouteImport } from './routes/_auth.sign-up'
 import { Route as AuthSignInRouteImport } from './routes/_auth.sign-in'
 import { Route as AuthSetupWorkspaceRouteImport } from './routes/_auth.setup-workspace'
 import { Route as AuthInviteRouteImport } from './routes/_auth.invite'
+import { Route as AppDocsIndexRouteImport } from './routes/app.docs.index'
 import { Route as AppSitesSiteIdRouteImport } from './routes/app.sites.$siteId'
+import { Route as AppDocsNewRouteImport } from './routes/app.docs.new'
+import { Route as AppDocsDocIdRouteImport } from './routes/app.docs.$docId'
 
 const AppRoute = AppRouteImport.update({
   id: '/app',
@@ -76,9 +79,24 @@ const AuthInviteRoute = AuthInviteRouteImport.update({
   path: '/invite',
   getParentRoute: () => AuthRoute,
 } as any)
+const AppDocsIndexRoute = AppDocsIndexRouteImport.update({
+  id: '/docs/',
+  path: '/docs/',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSitesSiteIdRoute = AppSitesSiteIdRouteImport.update({
   id: '/sites/$siteId',
   path: '/sites/$siteId',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDocsNewRoute = AppDocsNewRouteImport.update({
+  id: '/docs/new',
+  path: '/docs/new',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDocsDocIdRoute = AppDocsDocIdRouteImport.update({
+  id: '/docs/$docId',
+  path: '/docs/$docId',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -93,7 +111,10 @@ export interface FileRoutesByFullPath {
   '/app/new': typeof AppNewRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/': typeof AppIndexRoute
+  '/app/docs/$docId': typeof AppDocsDocIdRoute
+  '/app/docs/new': typeof AppDocsNewRoute
   '/app/sites/$siteId': typeof AppSitesSiteIdRoute
+  '/app/docs/': typeof AppDocsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -105,7 +126,10 @@ export interface FileRoutesByTo {
   '/app/new': typeof AppNewRoute
   '/app/settings': typeof AppSettingsRoute
   '/app': typeof AppIndexRoute
+  '/app/docs/$docId': typeof AppDocsDocIdRoute
+  '/app/docs/new': typeof AppDocsNewRoute
   '/app/sites/$siteId': typeof AppSitesSiteIdRoute
+  '/app/docs': typeof AppDocsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -120,7 +144,10 @@ export interface FileRoutesById {
   '/app/new': typeof AppNewRoute
   '/app/settings': typeof AppSettingsRoute
   '/app/': typeof AppIndexRoute
+  '/app/docs/$docId': typeof AppDocsDocIdRoute
+  '/app/docs/new': typeof AppDocsNewRoute
   '/app/sites/$siteId': typeof AppSitesSiteIdRoute
+  '/app/docs/': typeof AppDocsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -135,7 +162,10 @@ export interface FileRouteTypes {
     | '/app/new'
     | '/app/settings'
     | '/app/'
+    | '/app/docs/$docId'
+    | '/app/docs/new'
     | '/app/sites/$siteId'
+    | '/app/docs/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -147,7 +177,10 @@ export interface FileRouteTypes {
     | '/app/new'
     | '/app/settings'
     | '/app'
+    | '/app/docs/$docId'
+    | '/app/docs/new'
     | '/app/sites/$siteId'
+    | '/app/docs'
   id:
     | '__root__'
     | '/'
@@ -161,7 +194,10 @@ export interface FileRouteTypes {
     | '/app/new'
     | '/app/settings'
     | '/app/'
+    | '/app/docs/$docId'
+    | '/app/docs/new'
     | '/app/sites/$siteId'
+    | '/app/docs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -249,11 +285,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthInviteRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/app/docs/': {
+      id: '/app/docs/'
+      path: '/docs'
+      fullPath: '/app/docs/'
+      preLoaderRoute: typeof AppDocsIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/sites/$siteId': {
       id: '/app/sites/$siteId'
       path: '/sites/$siteId'
       fullPath: '/app/sites/$siteId'
       preLoaderRoute: typeof AppSitesSiteIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/docs/new': {
+      id: '/app/docs/new'
+      path: '/docs/new'
+      fullPath: '/app/docs/new'
+      preLoaderRoute: typeof AppDocsNewRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/docs/$docId': {
+      id: '/app/docs/$docId'
+      path: '/docs/$docId'
+      fullPath: '/app/docs/$docId'
+      preLoaderRoute: typeof AppDocsDocIdRouteImport
       parentRoute: typeof AppRoute
     }
   }
@@ -281,14 +338,20 @@ interface AppRouteChildren {
   AppNewRoute: typeof AppNewRoute
   AppSettingsRoute: typeof AppSettingsRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppDocsDocIdRoute: typeof AppDocsDocIdRoute
+  AppDocsNewRoute: typeof AppDocsNewRoute
   AppSitesSiteIdRoute: typeof AppSitesSiteIdRoute
+  AppDocsIndexRoute: typeof AppDocsIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppNewRoute: AppNewRoute,
   AppSettingsRoute: AppSettingsRoute,
   AppIndexRoute: AppIndexRoute,
+  AppDocsDocIdRoute: AppDocsDocIdRoute,
+  AppDocsNewRoute: AppDocsNewRoute,
   AppSitesSiteIdRoute: AppSitesSiteIdRoute,
+  AppDocsIndexRoute: AppDocsIndexRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
@@ -301,3 +364,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
