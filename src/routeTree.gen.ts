@@ -22,9 +22,6 @@ import { Route as AuthSetupWorkspaceRouteImport } from './routes/_auth.setup-wor
 import { Route as AuthInviteRouteImport } from './routes/_auth.invite'
 import { Route as AppDocsIndexRouteImport } from './routes/app.docs.index'
 import { Route as AppSitesSiteIdRouteImport } from './routes/app.sites.$siteId'
-import { Route as AppDocsIndexRouteImport } from './routes/app.docs.index'
-import { Route as AppDocsNewRouteImport } from './routes/app.docs.new'
-import { Route as AppDocsDocIdRouteImport } from './routes/app.docs.$docId'
 import { Route as AppDocsNewRouteImport } from './routes/app.docs.new'
 import { Route as AppDocsDocIdRouteImport } from './routes/app.docs.$docId'
 
