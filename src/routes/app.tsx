@@ -1,4 +1,5 @@
 import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
+import { ProductSwitcher } from "@/components/product-switcher";
 
 export const Route = createFileRoute("/app")({
   component: AppLayout,
@@ -40,6 +41,7 @@ function TopBar({ crumbs }: { crumbs: string[] }) {
         <Link to="/app" className="flex items-center gap-3 text-foreground">
           <PointerMark />
         </Link>
+        <ProductSwitcher />
         <div className="flex items-center gap-2 text-sm">
           <span className="flex h-6 w-6 items-center justify-center rounded-full border border-[var(--color-rule)] bg-[var(--color-paper)] font-mono text-[10px] uppercase">
             P
